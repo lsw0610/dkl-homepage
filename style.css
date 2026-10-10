@@ -61,3 +61,7 @@
 /* Public inquiry number: fixed readable width and no word wrapping. */
 .board-table-scroll .inquiry-table{table-layout:auto;min-width:830px}
 .board-table-scroll .inquiry-table th:first-child,.board-table-scroll .inquiry-table td:first-child{box-sizing:content-box;width:205px;min-width:205px;max-width:none;white-space:nowrap!important;word-break:keep-all!important;overflow-wrap:normal!important;flex-shrink:0}
+
+/* Menu-driven independent content screens. */
+main > section[hidden]{display:none!important}
+.nav a[aria-current="page"]{color:var(--blue);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:8px}
