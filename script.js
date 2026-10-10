@@ -4,11 +4,11 @@ const $ = (id) => document.getElementById(id);
 // Page-style navigation: show only the selected section while keeping one stable GitHub Pages site.
 // Company profile includes its equipment and registration sub-sections.
 const pageGroups={
- home:[],about:['about','equipment','registration'],services:['services'],
+ home:[],about:['about'],certifications:['equipment','registration'],services:['services'],
  process:['process'],coverage:['coverage'],projects:['projects'],
  directions:['directions'],contact:['contact']
 };
-const sectionToPage={equipment:'about',registration:'about'};
+const sectionToPage={equipment:'certifications',registration:'certifications'};
 function showPage(){
  const hash=decodeURIComponent(location.hash.slice(1));
  const page=pageGroups[hash]?hash:(sectionToPage[hash]||'home');
@@ -16,12 +16,14 @@ function showPage(){
    const onHome=!section.id;
    section.hidden=page==='home'?!onHome:!pageGroups[page].includes(section.id);
  });
+ const certSubnav=document.getElementById('certSubnav');
+ if(certSubnav)certSubnav.hidden=page!=='certifications';
  document.querySelectorAll('.nav a').forEach(link=>{
-   const active=link.getAttribute('href')==='#'+page;
+   const active=link.getAttribute('href')==='#'+page || (page==='certifications' && link.classList.contains('nav-dropdown-main'));
    if(active)link.setAttribute('aria-current','page');
    else link.removeAttribute('aria-current');
  });
- document.title=(page==='home'?'(주)디케이엘':({about:'회사소개',services:'사업분야',process:'업무절차',coverage:'서비스 지역',projects:'수행실적',directions:'오시는 길',contact:'고객문의'}[page]+' | (주)디케이엘'));
+ document.title=(page==='home'?'(주)디케이엘':({about:'회사소개',certifications:'인증현황',services:'사업분야',process:'업무절차',coverage:'서비스 지역',projects:'수행실적',directions:'오시는 길',contact:'고객문의'}[page]+' | (주)디케이엘'));
  // Subsection links in the company profile still scroll to their own target.
  requestAnimationFrame(()=>{
    if(sectionToPage[hash]){
