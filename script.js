@@ -1,5 +1,5 @@
 // DKL customer inquiry board client (production requires Apps Script deployment).
-const CONFIG = { apiUrl: 'https://script.google.com/macros/s/AKfycbyrcNL6ONnMBGCRhQ4jj4m43hF0qIPwDxIeYAlxiMjRBz8T_vMX-Il11KxLZnGdJ2jj/exec' }; // DKL 고객문의 웹 앱 배포 URL
+const CONFIG = { apiUrl: 'https://script.google.com/macros/s/AKfycbwKjBOCrtrxnJyYz7ILXfzWTbSmNfcaI4bdukRpvnIEdpU7XKb90y1AxepzJ7uTiTV6/exec' }; // DKL 고객문의 웹 앱 배포 URL
 const $ = (id) => document.getElementById(id);
 const toggle = $('menuToggle');
 const nav = $('nav');
