@@ -46,8 +46,11 @@ function fetchPublicRows(){
 }
 $('boardRefresh')?.addEventListener('click',fetchPublicRows);
 window.addEventListener('message',event=>{
- if(!boardToken||!/^https:\/\/([a-z0-9-]+\.)*googleusercontent\.com$/.test(event.origin))return;
- const data=event.data;
+ if(!boardToken)return;
+ // Accept the same trusted Google response origins as the working receipt handler.
+ if(!/^https:\/\/([a-z0-9-]+\.)*(googleusercontent\.com|google\.com)$/.test(event.origin))return;
+ let data=event.data;
+ if(typeof data==='string'){try{data=JSON.parse(data);}catch{return;}}
  if(!data||data.type!=='dkl-board-response'||data.token!==boardToken)return;
  boardToken=null;if(boardTimer){clearTimeout(boardTimer);boardTimer=null;}
  if(boardFrame){boardFrame.remove();boardFrame=null;}
