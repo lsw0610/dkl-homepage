@@ -61,6 +61,22 @@ window.addEventListener('message',event=>{
  }
  else status.textContent='접수 실패: '+(data.message||'잠시 후 다시 시도해 주세요.');
 });
+// Explain HTML form validation failures, which block the submit event itself.
+form?.addEventListener('invalid', e=>{
+ const field=e.target;
+ if(!field || !field.matches('input,select,textarea'))return;
+ const label=field.closest('label');
+ const fieldName=label?.textContent?.replace('*','').trim().slice(0,35)||'필수 입력 항목';
+ status.textContent=field.id==='privacy'?'개인정보 수집 및 이용 동의에 체크해 주세요.':field.id==='email'?'올바른 이메일 주소를 입력해 주세요.':fieldName+' 항목을 확인해 주세요.';
+},true);
+submit?.addEventListener('click',()=>{
+ if(submit.disabled)return;
+ if(!form.checkValidity()) {
+   const invalid=form.querySelector(':invalid');
+   if(invalid?.id==='privacy')status.textContent='개인정보 수집 및 이용 동의에 체크해 주세요.';
+   else status.textContent='필수 항목을 모두 입력하고 이메일 주소를 확인해 주세요.';
+ }
+});
 form?.addEventListener('submit', e=>{
  e.preventDefault();if(!form.reportValidity())return;
  if(!endpoint){status.textContent='온라인 접수 시스템 연결 전입니다. 전화 055-321-4644로 문의해 주세요.';return;}
