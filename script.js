@@ -46,8 +46,10 @@ fetchPublicRows();
 function makeIframe(){let iframe=$('dklInquiryReceiver');if(!iframe){iframe=document.createElement('iframe');iframe.name='dklInquiryReceiver';iframe.id='dklInquiryReceiver';iframe.style.display='none';iframe.title='상담 접수 결과';document.body.append(iframe);}return iframe;}
 let waitingToken=null;
 window.addEventListener('message',event=>{
- // Google Apps Script serves HtmlService replies from googleusercontent.com.
- if(!waitingToken || !/^https:\/\/([a-z0-9-]+\.)*googleusercontent\.com$/.test(event.origin))return;
+ // Accept authenticated Apps Script HTML responses hosted on Google domains; correlate by per-submission token.
+ if(!waitingToken)return;
+ const trustedOrigin=/^https:\/\/([a-z0-9-]+\.)*(googleusercontent\.com|google\.com)$/.test(event.origin);
+ if(!trustedOrigin)return;
  const data=event.data;if(!data || data.type!=='dkl-inquiry-response'||data.token!==waitingToken)return;
  waitingToken=null;clearTimeout(form._timer);submit.disabled=false;
  if(data.ok){
