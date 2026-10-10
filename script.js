@@ -50,7 +50,9 @@ window.addEventListener('message',event=>{
  if(!waitingToken)return;
  const trustedOrigin=/^https:\/\/([a-z0-9-]+\.)*(googleusercontent\.com|google\.com)$/.test(event.origin);
  if(!trustedOrigin)return;
- const data=event.data;if(!data || data.type!=='dkl-inquiry-response'||data.token!==waitingToken)return;
+ let data=event.data;
+ if(typeof data==='string'){try{data=JSON.parse(data);}catch{return;}}
+ if(!data || data.type!=='dkl-inquiry-response'||data.token!==waitingToken)return;
  waitingToken=null;clearTimeout(form._timer);submit.disabled=false;
  if(data.ok){
    form.reset();
@@ -90,8 +92,12 @@ form?.addEventListener('submit', e=>{
  const fields=['subject','region','facility','request','location','name','phone','email','organization','calltime','message'];
  fields.forEach(key=>{const inp=document.createElement('input');inp.name=key;inp.value=$(key).value;payload.append(inp);});
  for(const [key,value] of Object.entries({token,consent:'yes',website:$('botTrap').value})){const inp=document.createElement('input');inp.name=key;inp.value=value;payload.append(inp);}
- document.body.append(payload);payload.submit();payload.remove();
- form._timer=setTimeout(()=>{if(waitingToken===token){waitingToken=null;submit.disabled=false;status.textContent='접수 결과를 확인하지 못했습니다. 중복 접수 방지를 위해 먼저 회사에 확인해 주세요.';}},20000);
+ document.body.append(payload);
+ // Leave the submitting form attached until the hidden iframe has navigated.
+ // Removing it synchronously can interrupt the response navigation in browsers.
+ payload.submit();
+ setTimeout(()=>payload.remove(),30000);
+ form._timer=setTimeout(()=>{if(waitingToken===token){waitingToken=null;submit.disabled=false;status.textContent='접수 완료 화면으로 연결되지 않았습니다. 실제 접수되었을 수 있으니 접수 확인 이메일과 접수번호를 먼저 확인해 주세요. 중복 접수 방지를 위해 다시 제출하지 마세요.';}},30000);
 });
 $('consultAgain')?.addEventListener('click',()=>{
  $('consultSuccess').hidden=true;
