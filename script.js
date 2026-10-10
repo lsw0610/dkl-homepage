@@ -18,18 +18,30 @@ function renderRows(items) {
   if (!items.length) {const tr=document.createElement('tr');const td=document.createElement('td');td.colSpan=4;td.className='empty-row';td.textContent='공개 승인된 상담 내역이 없습니다.';tr.append(td);rows.append(tr);return;}
   items.forEach(item=>{const tr=document.createElement('tr');textCell(tr,item.number);textCell(tr,item.title,'board-title');textCell(tr,item.date);textCell(tr,item.status,'board-status-cell');rows.append(tr);});
 }
-// JSONP is used only for PUBLIC redacted summaries; the endpoint never returns private fields.
+// Public board uses the Apps Script HTMLService iframe reply.
+let boardToken=null, boardFrame=null, boardTimer=null;
 function fetchPublicRows(){
- if(!endpoint){boardStatus.textContent='게시판 서버 연결 전입니다. 설정을 완료하면 실제 문의가 표시됩니다.';return;}
- const callbackName='dklBoardCallback_'+Date.now()+'_'+Math.floor(Math.random()*10000);
- const script=document.createElement('script');let resolved=false;
- const cleanup=()=>{resolved=true;delete window[callbackName];script.remove();clearTimeout(timer);};
- const timer=setTimeout(()=>{if(!resolved){cleanup();boardStatus.textContent='현재 게시판을 불러올 수 없습니다. 잠시 후 다시 시도해 주세요.';}},12000);
- window[callbackName]=(payload)=>{cleanup();if(!payload || !payload.ok){boardStatus.textContent='게시판을 불러오지 못했습니다.';return;}renderRows(Array.isArray(payload.items)?payload.items:[]);boardStatus.textContent='승인된 문의만 표시됩니다.';};
- script.onerror=()=>{cleanup();boardStatus.textContent='게시판 연결 오류가 발생했습니다.';};
- script.src=endpoint+'?mode=public&callback='+encodeURIComponent(callbackName)+'&t='+Date.now();document.head.append(script);
+ if(!endpoint){boardStatus.textContent='게시판 서버 연결 전입니다.';return;}
+ if(boardFrame){boardFrame.remove();boardFrame=null;}
+ if(boardTimer){clearTimeout(boardTimer);boardTimer=null;}
+ const token='board_'+Date.now()+'_'+Math.random().toString(36).slice(2);
+ boardToken=token;boardStatus.textContent='게시판 목록을 불러오는 중입니다…';
+ const frame=document.createElement('iframe');frame.style.display='none';frame.title='공개 상담 목록 확인';boardFrame=frame;
+ frame.src=endpoint+'?mode=public&token='+encodeURIComponent(token)+'&t='+Date.now();
+ document.body.append(frame);
+ boardTimer=setTimeout(()=>{if(boardToken!==token)return;boardToken=null;frame.remove();if(boardFrame===frame)boardFrame=null;boardStatus.textContent='게시판을 불러오지 못했습니다.';},15000);
 }
 $('boardRefresh')?.addEventListener('click',fetchPublicRows);
+window.addEventListener('message',event=>{
+ if(!boardToken||!/^https:\/\/([a-z0-9-]+\.)*googleusercontent\.com$/.test(event.origin))return;
+ const data=event.data;
+ if(!data||data.type!=='dkl-board-response'||data.token!==boardToken)return;
+ boardToken=null;if(boardTimer){clearTimeout(boardTimer);boardTimer=null;}
+ if(boardFrame){boardFrame.remove();boardFrame=null;}
+ if(!data.ok){boardStatus.textContent='공개 게시판을 불러오지 못했습니다.';return;}
+ renderRows(Array.isArray(data.items)?data.items:[]);
+ boardStatus.textContent='관리자가 공개 승인한 문의만 표시됩니다.';
+});
 fetchPublicRows();
 function makeIframe(){let iframe=$('dklInquiryReceiver');if(!iframe){iframe=document.createElement('iframe');iframe.name='dklInquiryReceiver';iframe.id='dklInquiryReceiver';iframe.style.display='none';iframe.title='상담 접수 결과';document.body.append(iframe);}return iframe;}
 let waitingToken=null;
