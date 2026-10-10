@@ -48,6 +48,8 @@ let waitingToken=null;
 window.addEventListener('message',event=>{
  // Accept authenticated Apps Script HTML responses hosted on Google domains; correlate by per-submission token.
  if(!waitingToken)return;
+ // Diagnostic: log response origin and message type, never customer data or form fields.
+ if(/^https:\/\/([a-z0-9-]+\.)*(googleusercontent\.com|google\.com)$/.test(event.origin)) console.info('[DKL receipt] Message received from Google:',event.origin,'type:',typeof event.data==='object'?event.data?.type:'text');
  const trustedOrigin=/^https:\/\/([a-z0-9-]+\.)*(googleusercontent\.com|google\.com)$/.test(event.origin);
  if(!trustedOrigin)return;
  let data=event.data;
