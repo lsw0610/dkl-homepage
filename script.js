@@ -26,10 +26,23 @@ function fetchPublicRows(){
  if(boardTimer){clearTimeout(boardTimer);boardTimer=null;}
  const token='board_'+Date.now()+'_'+Math.random().toString(36).slice(2);
  boardToken=token;boardStatus.textContent='게시판 목록을 불러오는 중입니다…';
- const frame=document.createElement('iframe');frame.style.display='none';frame.title='공개 상담 목록 확인';boardFrame=frame;
- frame.src=endpoint+'?mode=public&token='+encodeURIComponent(token)+'&t='+Date.now();
- document.body.append(frame);
- boardTimer=setTimeout(()=>{if(boardToken!==token)return;boardToken=null;frame.remove();if(boardFrame===frame)boardFrame=null;boardStatus.textContent='게시판을 불러오지 못했습니다.';},15000);
+ const frame=document.createElement('iframe');
+ frame.name='dklBoardReceiver';frame.style.display='none';frame.title='공개 상담 목록 확인';
+ boardFrame=frame;document.body.append(frame);
+ // Google Apps Script GET response has been returning HTTP 404.
+ // Reuse the already-working POST/HtmlService message transport.
+ const request=document.createElement('form');
+ request.method='POST';request.action=endpoint;request.target=frame.name;request.style.display='none';
+ for(const [name,value] of Object.entries({mode:'public',token})){
+   const input=document.createElement('input');input.name=name;input.value=value;request.append(input);
+ }
+ document.body.append(request);request.submit();
+ setTimeout(()=>request.remove(),30000);
+ boardTimer=setTimeout(()=>{
+   if(boardToken!==token)return;
+   boardToken=null;frame.remove();if(boardFrame===frame)boardFrame=null;
+   boardStatus.textContent='게시판을 불러오지 못했습니다.';
+ },30000);
 }
 $('boardRefresh')?.addEventListener('click',fetchPublicRows);
 window.addEventListener('message',event=>{
