@@ -57,3 +57,7 @@
 /* Keep consultation reference numbers on one line; allow horizontal scroll on narrow screens. */
 .inquiry-table{min-width:800px}
 .inquiry-table th:first-child,.inquiry-table td:first-child{width:235px;min-width:235px;white-space:nowrap;overflow-wrap:normal;word-break:normal}
+
+/* Public inquiry number: fixed readable width and no word wrapping. */
+.board-table-scroll .inquiry-table{table-layout:auto;min-width:830px}
+.board-table-scroll .inquiry-table th:first-child,.board-table-scroll .inquiry-table td:first-child{box-sizing:content-box;width:205px;min-width:205px;max-width:none;white-space:nowrap!important;word-break:keep-all!important;overflow-wrap:normal!important;flex-shrink:0}
