@@ -50,7 +50,15 @@ window.addEventListener('message',event=>{
  if(!waitingToken || !/^https:\/\/([a-z0-9-]+\.)*googleusercontent\.com$/.test(event.origin))return;
  const data=event.data;if(!data || data.type!=='dkl-inquiry-response'||data.token!==waitingToken)return;
  waitingToken=null;clearTimeout(form._timer);submit.disabled=false;
- if(data.ok){status.textContent='상담 접수가 완료되었습니다. 접수번호: '+data.number+'. 담당자가 확인 후 답변이나 연락을 드리겠습니다. '+(data.customerEmailSent?'입력하신 이메일로 접수 확인 메일을 발송했습니다.':'접수 확인 메일의 발송 여부를 확인하지 못했습니다. 필요한 경우 전화로 문의해 주세요.');form.reset();fetchPublicRows();}
+ if(data.ok){
+   form.reset();
+   const receipt=$('consultSuccess');
+   $('consultReceiptNo').textContent=data.number||'접수번호 확인 필요';
+   $('consultEmailNotice').textContent=data.customerEmailSent?'입력하신 이메일로 접수 확인 메일을 발송했습니다.':'접수는 완료되었지만 이메일 발송 여부는 확인되지 않았습니다. 필요한 경우 전화로 문의해 주세요.';
+   form.hidden=true;
+   receipt.hidden=false;
+   receipt.scrollIntoView({behavior:'smooth',block:'center'});
+ }
  else status.textContent='접수 실패: '+(data.message||'잠시 후 다시 시도해 주세요.');
 });
 form?.addEventListener('submit', e=>{
@@ -66,5 +74,12 @@ form?.addEventListener('submit', e=>{
  for(const [key,value] of Object.entries({token,consent:'yes',website:$('botTrap').value})){const inp=document.createElement('input');inp.name=key;inp.value=value;payload.append(inp);}
  document.body.append(payload);payload.submit();payload.remove();
  form._timer=setTimeout(()=>{if(waitingToken===token){waitingToken=null;submit.disabled=false;status.textContent='접수 결과를 확인하지 못했습니다. 중복 접수 방지를 위해 먼저 회사에 확인해 주세요.';}},20000);
+});
+$('consultAgain')?.addEventListener('click',()=>{
+ $('consultSuccess').hidden=true;
+ form.hidden=false;
+ status.textContent='';
+ form.reset();
+ form.scrollIntoView({behavior:'smooth',block:'start'});
 });
 $('copyAddress')?.addEventListener('click',async()=>{const addr='경상남도 김해시 인제로 143번지, 2층';try{await navigator.clipboard.writeText(addr);$('addressStatus').textContent='주소가 복사되었습니다.';}catch{$('addressStatus').textContent=addr;}});
