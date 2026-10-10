@@ -42,3 +42,14 @@
 .direction-google-only .direction-map-links{position:absolute;bottom:0;left:0;right:0;height:48px;display:flex;align-items:center;justify-content:space-evenly;background:#0b2c43;z-index:3}
 .direction-google-only .direction-map-links a{color:white!important;text-decoration:none;font-size:13px;font-weight:700;padding:10px 8px}
 .direction-google-only .direction-map-links a:hover{text-decoration:underline}
+
+/* Consultation receipt screen (shown only after a confirmed server success). */
+.contact-form[hidden],.consult-success[hidden]{display:none!important}
+.consult-success{background:#fff;border:1px solid #d9e8ee;padding:clamp(28px,4vw,54px);text-align:center;box-shadow:0 12px 40px #092d4410;align-self:start}
+.consult-success-icon{width:65px;height:65px;display:grid;place-items:center;margin:0 auto 16px;border-radius:50%;background:#e7f7f3;color:#16856d;font-size:34px;font-weight:700}
+.consult-success h3{font-size:clamp(22px,2.4vw,30px);color:#0b253d;margin:10px 0 16px;line-height:1.4}
+.consult-success p{color:#4f6272;line-height:1.95;margin:0 auto 20px}
+.consult-receipt{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;background:#f0f6f9;padding:16px;margin:20px auto;font-size:13px}
+.consult-receipt strong{font-size:15px;color:#063c5b;overflow-wrap:anywhere}
+.consult-success .consult-email-notice{font-size:13px;margin-bottom:23px}
+.consult-success .btn{margin:auto}
