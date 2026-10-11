@@ -187,13 +187,18 @@ submit?.addEventListener('click',()=>{
    const invalid=form.querySelector(':invalid');
    if(invalid?.id==='privacy')status.textContent='개인정보 수집 및 이용 동의에 체크해 주세요.';
    else status.textContent='필수 항목을 모두 입력하고 이메일 주소를 확인해 주세요.';
+   status.style.display='block';
+   form.reportValidity();
+   return;
  }
+ status.textContent='입력 내용을 확인했습니다. 상담 접수를 진행합니다…';
+ status.style.display='block';
 });
 form?.addEventListener('submit', e=>{
  e.preventDefault();if(!form.reportValidity())return;
  if(!endpoint){status.textContent='온라인 접수 시스템 연결 전입니다. 전화 055-321-4644로 문의해 주세요.';return;}
- if($('botTrap').value)return;
- if(waitingToken)return;
+ if($('botTrap').value){status.textContent='자동 입력이 감지되어 접수를 진행하지 못했습니다. 화면을 새로고침한 후 다시 작성해 주세요.';return;}
+ if(waitingToken){status.textContent='이전 접수 결과를 확인 중입니다. 잠시 기다려 주세요.';return;}
  const token=String(Date.now())+Math.random().toString(36).slice(2);
  waitingToken=token;submit.disabled=true;status.textContent='접수 내용을 전송하고 있습니다…';
  const payload=document.createElement('form');payload.method='POST';payload.action=endpoint;payload.target=makeIframe().name;payload.style.display='none';
@@ -203,7 +208,14 @@ form?.addEventListener('submit', e=>{
  document.body.append(payload);
  // Leave the submitting form attached until the hidden iframe has navigated.
  // Removing it synchronously can interrupt the response navigation in browsers.
- payload.submit();
+ try { payload.submit(); }
+ catch(err) {
+   waitingToken=null;
+   submit.disabled=false;
+   status.textContent='전송을 시작하지 못했습니다. 잠시 후 새로고침하여 다시 시도해 주세요.';
+   payload.remove();
+   return;
+ }
  setTimeout(()=>payload.remove(),30000);
  form._timer=setTimeout(()=>{if(waitingToken===token){waitingToken=null;submit.disabled=false;status.textContent='접수 완료 화면으로 연결되지 않았습니다. 실제 접수되었을 수 있으니 접수 확인 이메일과 접수번호를 먼저 확인해 주세요. 중복 접수 방지를 위해 다시 제출하지 마세요.';}},30000);
 });
