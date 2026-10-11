@@ -135,3 +135,12 @@ main > section[hidden]{display:none!important}
 .process .step-icon{color:#123f5d}
 .process .step h3{color:#09283e}
 .process .step p{color:#173f57}
+
+/* Darker solid navy business process cards */
+.process .step{background:#244d6a;border-color:#416985}
+.process .step::before{content:none}
+.process .steps{border-color:#416985}
+.process .step-num{color:#aee4fa!important}
+.process .step-icon{color:#b9e2f2}
+.process .step h3{color:#fff}
+.process .step p{color:#dcebf3}
