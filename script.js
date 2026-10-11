@@ -203,7 +203,7 @@ form?.addEventListener('submit', e=>{
  waitingToken=token;submit.disabled=true;status.textContent='접수 내용을 전송하고 있습니다…';
  const payload=document.createElement('form');payload.method='POST';payload.action=endpoint;payload.target=makeIframe().name;payload.style.display='none';
  const fields=['subject','region','facility','request','location','name','phone','email','organization','calltime','message'];
- fields.forEach(key=>{const inp=document.createElement('input');inp.name=key;inp.value=$(key).value;payload.append(inp);});
+ fields.forEach(key=>{const inp=document.createElement('input');inp.name=key;inp.value=$(key)?.value||'';payload.append(inp);});
  for(const [key,value] of Object.entries({token,consent:'yes',website:$('botTrap').value})){const inp=document.createElement('input');inp.name=key;inp.value=value;payload.append(inp);}
  document.body.append(payload);
  // Leave the submitting form attached until the hidden iframe has navigated.
