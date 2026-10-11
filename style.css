@@ -117,3 +117,12 @@ main > section[hidden]{display:none!important}
 .process .step-icon{color:#a6ddec}
 .process .step h3{color:#fff}
 .process .step p{color:#d2e3ed}
+
+/* Muted light navy workflow cards */
+.process .step{background:linear-gradient(145deg,#cbdde8 0%,#e7f0f5 55%,#d4e5ee 100%);border-color:#bfd3df}
+.process .step::before{background:radial-gradient(circle at 12% 10%,rgba(77,137,169,.13),transparent 58%)}
+.process .steps{border-color:#bfd3df}
+.process .step-num{color:#153c57!important}
+.process .step-icon{color:#326b8b}
+.process .step h3{color:#102c42}
+.process .step p{color:#48687d}
