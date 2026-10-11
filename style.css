@@ -87,3 +87,16 @@ main > section[hidden]{display:none!important}
 .footer-simple-inner .footer-copy{color:#a6b8c6;font-size:13px;margin:9px 0 0}
 .footer-sep{margin:0 9px;color:#7794a9}
 @media(max-width:640px){.site-footer-simple{padding:20px 0}.footer-simple-inner p{font-size:12px}.footer-sep{margin:0 4px}}
+
+/* Business process page: light theme */
+.process{background:#fff;color:#173348}
+.process .section-head.white .section-title{color:#102b40}
+.process .section-head.white .section-title strong{color:#087eaa}
+.process .section-head.white>p{color:#587082}
+.process .eyebrow.light{color:#0089bd}
+.process .steps{border-color:#d7e4eb;background:#fff}
+.process .step{border-color:#d7e4eb}
+.process .step-num{color:#0789b8}
+.process .step-icon{color:#317c9d}
+.process .step h3{color:#112e44}
+.process .step p{color:#607a8b}
