@@ -61,7 +61,7 @@ let projectToken=null,projectFrame=null,projectTimeout=null;
 function renderPublicProjects(items){
  if(!projectGrid)return;
  const cards=document.createDocumentFragment();
- [...items].reverse().forEach((item,index)=>{
+ items.forEach((item,index)=>{
    const article=document.createElement('article');
    const ongoing=item.status==='진행중';
    article.className='project-card '+(ongoing?'ongoing':'complete');
