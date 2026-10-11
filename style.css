@@ -103,3 +103,8 @@ main > section[hidden]{display:none!important}
 
 /* Make process step numbers 01–05 dark navy on the white cards */
 .process .step-num{color:#08243a!important;font-weight:800!important}
+
+/* Soft blue gradient inside each process step card */
+.process .step{position:relative;overflow:hidden;background:linear-gradient(145deg,#edf6fa 0%,#ffffff 45%,#eef7fa 100%)}
+.process .step::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 12% 18%,rgba(34,180,231,.16) 0%,rgba(34,180,231,.045) 24%,transparent 52%),linear-gradient(135deg,rgba(0,139,194,.08),transparent 48%,rgba(34,180,231,.07));pointer-events:none}
+.process .step>*{position:relative;z-index:1}
