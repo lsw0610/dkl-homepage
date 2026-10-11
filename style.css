@@ -300,3 +300,13 @@ main>section{min-width:0}
  .process .step h3{font-size:17px;line-height:1.45;margin:0 0 7px}
  .process .step p{font-size:13px;line-height:1.6;margin:0}
 }
+
+/* Slightly larger complete service illustrations on mobile; desktop unchanged. */
+@media(max-width:760px){
+ .service-card .service-illustration{height:205px;padding:12px 16px}
+ .service-card .service-illustration img{width:92%;max-width:360px;max-height:185px;object-fit:contain}
+}
+@media(max-width:440px){
+ .service-card .service-illustration{height:190px;padding:10px 12px}
+ .service-card .service-illustration img{width:90%;max-width:330px;max-height:172px;object-fit:contain}
+}
