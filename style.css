@@ -153,3 +153,21 @@ main > section[hidden]{display:none!important}
 .process .step-icon{color:#d3ebf7}
 .process .step h3{color:#fff}
 .process .step p{color:#edf5fa}
+
+/* Consistent solid navy styling: qualification and equipment cards */
+.registration-section .credential-card,
+.equipment .equipment-card{background:#386583;border:1px solid #64869d;box-shadow:none}
+.registration-section .credential-meta,
+.equipment .equipment-body{color:#fff}
+.registration-section .credential-meta h4,
+.equipment .equipment-name{color:#fff}
+.registration-section .credential-meta>p,
+.registration-section .credential-meta li,
+.equipment .equipment-body dt,
+.equipment .equipment-body dd{color:#edf5fa}
+.registration-section .credential-badge{background:#e0edf6;color:#144663}
+.registration-section .credential-thumb,
+.equipment .equipment-thumb{background:#f2f7fa;border-color:#b7cfde}
+.registration-section .credential-thumb span{background:#0b2d46;color:#fff}
+.registration-section .credential-card:hover,
+.equipment .equipment-card:hover{box-shadow:0 8px 24px rgba(9,46,72,.17)}
