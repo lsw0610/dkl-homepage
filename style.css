@@ -233,3 +233,36 @@ main>section{min-width:0}
  .footer-sep{display:none}
  .footer-simple-inner .footer-sep+*{margin-left:0}
 }
+
+
+/* Mobile-only: show full business-service illustrations at a smaller size.
+   Desktop presentation remains unchanged. */
+@media(max-width:760px){
+ .service-card .service-illustration{
+   height:185px;
+   min-height:0;
+   padding:18px 20px;
+   display:flex;
+   align-items:center;
+   justify-content:center;
+   overflow:hidden;
+ }
+ .service-card .service-illustration img{
+   display:block;
+   width:78%;
+   max-width:280px;
+   height:100%;
+   max-height:145px;
+   object-fit:contain;
+   object-position:center;
+   flex:none;
+ }
+}
+@media(max-width:440px){
+ .service-card .service-illustration{height:170px;padding:18px}
+ .service-card .service-illustration img{
+   width:72%;
+   max-width:240px;
+   max-height:130px;
+ }
+}
