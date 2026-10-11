@@ -53,6 +53,61 @@ function renderRows(items) {
   if (!items.length) {const tr=document.createElement('tr');const td=document.createElement('td');td.colSpan=4;td.className='empty-row';td.textContent='공개 승인된 상담 내역이 없습니다.';tr.append(td);rows.append(tr);return;}
   items.forEach((item,index)=>{const tr=document.createElement('tr');textCell(tr,index+1);textCell(tr,item.title,'board-title');textCell(tr,item.date);textCell(tr,item.status,'board-status-cell');rows.append(tr);});
 }
+
+// Projects auto-sync: reads only approved public rows via Apps Script POST.
+// Until the Sheet backend is enabled, the six current project cards stay visible.
+const projectGrid=$('projectGrid'),projectSyncStatus=$('projectSyncStatus');
+let projectToken=null,projectFrame=null,projectTimeout=null;
+function renderPublicProjects(items){
+ if(!projectGrid)return;
+ const cards=document.createDocumentFragment();
+ items.forEach((item,index)=>{
+   const article=document.createElement('article');
+   const ongoing=item.status==='진행중';
+   article.className='project-card '+(ongoing?'ongoing':'complete');
+   const badge=document.createElement('div');badge.className='project-badge';badge.textContent=ongoing?'진행중':'진행완료';
+   const num=document.createElement('span');num.className='project-num';num.textContent=String(index+1).padStart(2,'0');
+   const heading=document.createElement('h3');heading.textContent=String(item.name||'');
+   const desc=document.createElement('p');desc.textContent=String(item.facility||'');
+   article.append(badge,num,heading,desc);cards.append(article);
+ });
+ projectGrid.replaceChildren(cards);
+}
+function fetchPublicProjects(){
+ if(!endpoint || !projectGrid)return;
+ if(projectFrame){projectFrame.remove();projectFrame=null;}
+ if(projectTimeout)clearTimeout(projectTimeout);
+ const token='projects_'+Date.now()+'_'+Math.random().toString(36).slice(2);
+ projectToken=token;
+ const frame=document.createElement('iframe');
+ frame.name='dklProjectsReceiver';frame.style.display='none';frame.title='공개 수행실적 조회';
+ projectFrame=frame;document.body.append(frame);
+ const request=document.createElement('form');
+ request.method='POST';request.action=endpoint;request.target=frame.name;request.style.display='none';
+ for(const [name,value] of Object.entries({mode:'projects',token})){
+   const input=document.createElement('input');input.name=name;input.value=value;request.append(input);
+ }
+ document.body.append(request);request.submit();
+ setTimeout(()=>request.remove(),30000);
+ projectTimeout=setTimeout(()=>{
+   if(projectToken!==token)return;
+   projectToken=null;if(projectFrame){projectFrame.remove();projectFrame=null;}
+   projectSyncStatus.textContent='기존 수행실적을 표시하고 있습니다.';
+ },12000);
+}
+window.addEventListener('message',event=>{
+ if(!projectToken || !/^https:\/\/([a-z0-9-]+\.)*(googleusercontent\.com|google\.com)$/.test(event.origin))return;
+ let data=event.data;
+ if(typeof data==='string'){try{data=JSON.parse(data);}catch{return;}}
+ if(!data || data.type!=='dkl-projects-response' || data.token!==projectToken)return;
+ projectToken=null;if(projectTimeout)clearTimeout(projectTimeout);
+ if(projectFrame){projectFrame.remove();projectFrame=null;}
+ if(!data.ok){projectSyncStatus.textContent='기존 수행실적을 표시하고 있습니다.';return;}
+ const items=Array.isArray(data.items)?data.items:[];
+ renderPublicProjects(items);
+ projectSyncStatus.textContent=items.length?'등록된 수행실적을 표시합니다.':'공개된 수행실적이 아직 없습니다.';
+});
+fetchPublicProjects();
 // Public board uses the Apps Script HTMLService iframe reply.
 let boardToken=null, boardFrame=null, boardTimer=null;
 function fetchPublicRows(){
