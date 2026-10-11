@@ -171,3 +171,65 @@ main > section[hidden]{display:none!important}
 .registration-section .credential-thumb span{background:#0b2d46;color:#fff}
 .registration-section .credential-card:hover,
 .equipment .equipment-card:hover{box-shadow:0 8px 24px rgba(9,46,72,.17)}
+
+
+/* Responsive refinements for phones and tablets (2026-10-11). */
+html,body{max-width:100%}
+img,video,iframe{max-width:100%}
+main>section{min-width:0}
+@media(max-width:1000px){
+ .header{height:70px}
+ .header-in{position:relative}
+ .header-cta{margin-left:auto}
+ .menu-toggle{display:block;flex:0 0 auto;touch-action:manipulation}
+ .nav{display:none;position:absolute;top:70px;left:0;right:0;z-index:45;background:#fff;box-shadow:0 16px 30px #0b264328;padding:12px 22px 20px;flex-direction:column;align-items:stretch;gap:0;max-height:calc(100dvh - 70px);overflow-y:auto}
+ .nav.open{display:flex}
+ .nav a{padding:11px 0;border-bottom:1px solid #e7eff3;font-size:15px;white-space:normal}
+ .nav-dropdown{display:block;align-self:auto}
+ .nav-dropdown-main{justify-content:space-between}
+ .nav-dropdown-menu{position:static;display:flex;flex-direction:column;box-shadow:none;border:0;border-left:2px solid #d9e7ed;margin:4px 0 8px 12px;padding:0}
+ .nav-dropdown-menu a{padding:8px 12px;font-size:14px}
+ .header-in{gap:12px}
+ .brand{max-width:210px;flex:0 1 210px;min-width:0}
+}
+@media(max-width:760px){
+ .container{width:calc(100% - 32px)}
+ .section{padding:58px 0}
+ .hero-grid{min-height:470px}
+ .hero-copy{padding:70px 0 36px}
+ .hero-art{right:-115px;width:440px;opacity:.18}
+ .hero h1{font-size:clamp(29px,7vw,37px);line-height:1.48;letter-spacing:-1.3px}
+ .hero p{font-size:14px;line-height:1.85}
+ .hero-actions{gap:10px}
+ .hero-actions .btn{min-height:46px}
+ .intro-grid,.about-grid,.coverage-grid,.contact-grid,.directions-grid{grid-template-columns:minmax(0,1fr)}
+ .service-grid,.project-grid,.equipment-grid,.credential-grid{grid-template-columns:minmax(0,1fr)}
+ .form-row{grid-template-columns:minmax(0,1fr)}
+ .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .contact-form{padding:25px 18px}
+ .contact-form input:not([type=checkbox]),.contact-form select,.contact-form textarea{font-size:16px;min-height:45px}
+ .contact-form textarea{min-height:140px}
+ .inquiry-board{padding:18px 14px}
+ .inquiry-board-heading{gap:10px;flex-wrap:wrap}
+ .board-table-scroll{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+ .board-table-scroll .inquiry-table{min-width:750px}
+ .direction-map,.direction-naver-only,.direction-google-only{min-height:320px!important}
+ .footer-simple-inner p{line-height:1.85}
+}
+@media(max-width:440px){
+ .brand{flex:0 1 175px;max-width:175px}
+ .menu-toggle{margin-left:auto}
+ .hero-grid{min-height:425px}
+ .hero-copy{padding-top:65px}
+ .hero h1{font-size:29px}
+ .hero-actions .btn{font-size:12px;padding:12px 13px;gap:8px;flex:1 1 145px}
+ .section-title{font-size:clamp(24px,6.7vw,29px)}
+ .steps{grid-template-columns:minmax(0,1fr)}
+ .step,.step:nth-child(2n){border-right:1px solid #64869d;min-height:0}
+ .equipment-card{grid-template-columns:minmax(0,1fr)}
+ .contact-form{padding:20px 14px}
+ .inquiry-board-heading{flex-direction:column;align-items:stretch}
+ .board-refresh{align-self:flex-start}
+ .footer-sep{display:none}
+ .footer-simple-inner .footer-sep+*{margin-left:0}
+}
