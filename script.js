@@ -166,7 +166,7 @@ window.addEventListener('message',event=>{
    form.reset();
    const receipt=$('consultSuccess');
    $('consultReceiptNo').textContent=data.number||'접수번호 확인 필요';
-   $('consultEmailNotice').textContent=data.customerEmailSent?'입력하신 이메일로 접수 확인 메일을 발송했습니다.':'접수는 완료되었지만 이메일 발송 여부는 확인되지 않았습니다. 필요한 경우 전화로 문의해 주세요.';
+   $('consultEmailNotice').textContent=data.customerEmailSent?'입력하신 이메일로 접수 확인 메일을 발송했습니다.':'이메일을 입력하지 않았거나 확인 메일이 발송되지 않았습니다. 접수번호를 보관해 주세요.';
    form.hidden=true;
    receipt.hidden=false;
    receipt.scrollIntoView({behavior:'smooth',block:'center'});
