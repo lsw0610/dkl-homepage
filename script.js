@@ -104,8 +104,8 @@ window.addEventListener('message',event=>{
  if(projectFrame){projectFrame.remove();projectFrame=null;}
  if(!data.ok){projectSyncStatus.textContent='기존 수행실적을 표시하고 있습니다.';return;}
  const items=Array.isArray(data.items)?data.items:[];
- renderPublicProjects(items);
- projectSyncStatus.textContent=items.length?'등록된 수행실적을 표시합니다.':'공개된 수행실적이 아직 없습니다.';
+ if(items.length)renderPublicProjects(items);
+ projectSyncStatus.textContent=items.length?'스프레드시트에서 공개된 수행실적을 표시합니다.':'시트에 공개된 실적이 없어 기존 수행실적을 표시합니다.';
 });
 fetchPublicProjects();
 // Public board uses the Apps Script HTMLService iframe reply.
