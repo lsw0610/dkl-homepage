@@ -126,3 +126,12 @@ main > section[hidden]{display:none!important}
 .process .step-icon{color:#326b8b}
 .process .step h3{color:#102c42}
 .process .step p{color:#48687d}
+
+/* Solid medium navy workflow cards without gradients */
+.process .step{background:#668da8;border-color:#acc5d5}
+.process .step::before{content:none}
+.process .steps{border-color:#acc5d5}
+.process .step-num{color:#082b44!important}
+.process .step-icon{color:#123f5d}
+.process .step h3{color:#09283e}
+.process .step p{color:#173f57}
