@@ -76,3 +76,5 @@ main > section[hidden]{display:none!important}
 .nav-dropdown-menu a:hover{background:#f0f7fa}
 @media(min-width:1001px){.nav{gap:clamp(10px,1.25vw,24px)}.header-in{gap:20px}}
 @media(max-width:1000px){.nav-dropdown{display:block;align-self:auto}.nav-dropdown-menu{position:static;display:flex;flex-direction:column;box-shadow:none;border:0;border-left:2px solid #d9e7ed;margin:3px 0 7px 11px;padding:0}.nav-dropdown-menu a{padding:6px 12px}}
+
+.project-sync-status{font-size:12px;color:#6b8491;margin:0 0 14px}
