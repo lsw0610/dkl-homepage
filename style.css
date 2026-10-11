@@ -100,3 +100,6 @@ main > section[hidden]{display:none!important}
 .process .step-icon{color:#317c9d}
 .process .step h3{color:#112e44}
 .process .step p{color:#607a8b}
+
+/* Make process step numbers 01–05 dark navy on the white cards */
+.process .step-num{color:#08243a!important;font-weight:800!important}
