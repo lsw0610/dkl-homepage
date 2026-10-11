@@ -51,7 +51,7 @@ function textCell(tr, value, className) { const td=document.createElement('td');
 function renderRows(items) {
   rows.replaceChildren();
   if (!items.length) {const tr=document.createElement('tr');const td=document.createElement('td');td.colSpan=4;td.className='empty-row';td.textContent='공개 승인된 상담 내역이 없습니다.';tr.append(td);rows.append(tr);return;}
-  items.forEach(item=>{const tr=document.createElement('tr');textCell(tr,item.number);textCell(tr,item.title,'board-title');textCell(tr,item.date);textCell(tr,item.status,'board-status-cell');rows.append(tr);});
+  items.forEach((item,index)=>{const tr=document.createElement('tr');textCell(tr,index+1);textCell(tr,item.title,'board-title');textCell(tr,item.date);textCell(tr,item.status,'board-status-cell');rows.append(tr);});
 }
 // Public board uses the Apps Script HTMLService iframe reply.
 let boardToken=null, boardFrame=null, boardTimer=null;
