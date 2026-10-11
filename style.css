@@ -108,3 +108,12 @@ main > section[hidden]{display:none!important}
 .process .step{position:relative;overflow:hidden;background:linear-gradient(145deg,#edf6fa 0%,#ffffff 45%,#eef7fa 100%)}
 .process .step::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 12% 18%,rgba(34,180,231,.16) 0%,rgba(34,180,231,.045) 24%,transparent 52%),linear-gradient(135deg,rgba(0,139,194,.08),transparent 48%,rgba(34,180,231,.07));pointer-events:none}
 .process .step>*{position:relative;z-index:1}
+
+/* Deep navy gradient for workflow cards, with accessible light text */
+.process .step{background:linear-gradient(145deg,#081e31 0%,#113b57 100%);border-color:#375c73}
+.process .step::before{background:radial-gradient(circle at 10% 5%,rgba(45,160,206,.18),transparent 58%);pointer-events:none}
+.process .steps{border-color:#375c73}
+.process .step-num{color:#8bdaef!important}
+.process .step-icon{color:#a6ddec}
+.process .step h3{color:#fff}
+.process .step p{color:#d2e3ed}
