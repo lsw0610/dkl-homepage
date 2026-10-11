@@ -40,7 +40,7 @@ const toggle = $('menuToggle');
 const nav = $('nav');
 toggle?.addEventListener('click', () => { const open = nav.classList.toggle('open'); toggle.setAttribute('aria-expanded', String(open)); toggle.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기'); });
 nav?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {nav.classList.remove('open');toggle.setAttribute('aria-expanded','false');}));
-$('year').textContent = new Date().getFullYear();
+if ($('year')) $('year').textContent = new Date().getFullYear();
 const endpoint = CONFIG.apiUrl.trim();
 const form = $('consultForm');
 const submit = form?.querySelector('button[type="submit"]');
