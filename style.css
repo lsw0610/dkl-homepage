@@ -328,3 +328,17 @@ main>section{min-width:0}
  .service-card .service-illustration{height:228px;padding:6px 8px}
  .service-card .service-illustration img{width:100%;max-width:396px;height:100%;max-height:206px;object-fit:contain;object-position:center}
 }
+
+/* Business areas 01–04: approx. 20% larger illustration display, no cropping. */
+@media(min-width:761px){
+ .service-card .service-illustration{height:230px}
+ .service-card .service-illustration img{object-fit:contain}
+}
+@media(min-width:441px) and (max-width:760px){
+ .service-card .service-illustration{height:294px}
+ .service-card .service-illustration img{max-height:269px}
+}
+@media(max-width:440px){
+ .service-card .service-illustration{height:274px}
+ .service-card .service-illustration img{max-height:247px}
+}
