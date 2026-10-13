@@ -342,3 +342,13 @@ main>section{min-width:0}
  .service-card .service-illustration{height:274px}
  .service-card .service-illustration img{max-height:247px}
 }
+
+/* Mobile footer: four clear company-information lines, desktop remains compact. */
+@media(max-width:760px){
+ .site-footer-simple .footer-contact-lines{display:flex;flex-direction:column;gap:4px}
+ .site-footer-simple .footer-contact-lines p{display:block;margin:0;font-size:clamp(11px,2.7vw,13px);line-height:1.7;letter-spacing:-.25px;white-space:nowrap}
+ .site-footer-simple .footer-contact-lines .footer-company{font-weight:700;font-size:14px}
+ .site-footer-simple .footer-contact-lines .footer-sep{display:inline;margin:0 5px}
+ .site-footer-simple .footer-copy{margin-top:13px}
+}
+@media(min-width:761px){.site-footer-simple .footer-contact-lines{display:flex;flex-wrap:wrap;column-gap:18px;row-gap:0}}
