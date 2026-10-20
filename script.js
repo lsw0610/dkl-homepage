@@ -1,5 +1,9 @@
 // DKL customer inquiry board client (production requires Apps Script deployment).
-const CONFIG = { apiUrl: 'https://script.google.com/macros/s/AKfycbwKjBOCrtrxnJyYz7ILXfzWTbSmNfcaI4bdukRpvnIEdpU7XKb90y1AxepzJ7uTiTV6/exec' }; // DKL 고객문의 웹 앱 배포 URL
+const CONFIG = {
+  apiUrl: 'https://script.google.com/macros/s/AKfycbwKjBOCrtrxnJyYz7ILXfzWTbSmNfcaI4bdukRpvnIEdpU7XKb90y1AxepzJ7uTiTV6/exec',
+  // Separate visitor-counter deployment; see docs/visitor-counter.md. Never reuse apiUrl.
+  visitorApiUrl: 'https://script.google.com/macros/s/AKfycbzqiP_8RFaPR2GYqFGokhHUERSgGB9mx0MmCturyVlrukggieyaCVIIKpoY1RmwxGw6/exec'
+};
 const $ = (id) => document.getElementById(id);
 // Page-style navigation: show only the selected section while keeping one stable GitHub Pages site.
 // Company profile includes its equipment and registration sub-sections.

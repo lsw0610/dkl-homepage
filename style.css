@@ -352,3 +352,11 @@ main>section{min-width:0}
  .site-footer-simple .footer-copy{margin-top:13px}
 }
 @media(min-width:761px){.site-footer-simple .footer-contact-lines{display:flex;flex-wrap:wrap;column-gap:18px;row-gap:0}}
+
+.visitor-counter{margin-top:18px;padding-top:15px;border-top:1px solid #284152}
+.visitor-stats{display:flex;flex-wrap:wrap;gap:10px 28px;margin:0}
+.visitor-stats>div{display:flex;align-items:baseline;gap:12px}
+.visitor-stats dt{font-size:12px;color:#b7c8d4}
+.visitor-stats dd{display:flex;align-items:baseline;gap:4px;margin:0;font-size:12px;color:#b7c8d4}
+.visitor-stats strong{font-size:18px;line-height:1.4;color:#fff;font-variant-numeric:tabular-nums}
+@media(max-width:440px){.visitor-stats{column-gap:22px}.visitor-stats>div{gap:9px}.visitor-stats strong{font-size:17px}}
